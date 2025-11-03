@@ -1,0 +1,278 @@
+{
+  "datasets": {
+    "classification": [
+      {
+        "name": "Circle",
+        "description": "One class encircles another class",
+        "type": "classification",
+        "difficulty": "medium"
+      },
+      {
+        "name": "XOR (Exclusive OR)",
+        "description": "Classic non-linearly separable problem",
+        "type": "classification",
+        "difficulty": "hard"
+      },
+      {
+        "name": "Gaussian",
+        "description": "Multiple Gaussian clusters/blobs",
+        "type": "classification",
+        "difficulty": "easy"
+      },
+      {
+        "name": "Spiral",
+        "description": "Two classes spiraling around each other",
+        "type": "classification",
+        "difficulty": "hard"
+      }
+    ],
+    "regression": [
+      {
+        "name": "Plane",
+        "description": "Simple planar surface",
+        "type": "regression",
+        "difficulty": "easy"
+      },
+      {
+        "name": "Multi-Gaussian",
+        "description": "Multiple clusters with spatial distributions",
+        "type": "regression",
+        "difficulty": "medium"
+      }
+    ]
+  },
+  "activation_functions": [
+    {
+      "name": "ReLU",
+      "formula": "max(0, x)",
+      "range": "[0, \u221e)",
+      "pros": [
+        "Fast computation",
+        "No vanishing gradient",
+        "Sparsity"
+      ],
+      "cons": [
+        "Dying ReLU problem",
+        "Unbounded output"
+      ],
+      "use_case": "Default choice for hidden layers"
+    },
+    {
+      "name": "Sigmoid",
+      "formula": "1 / (1 + e^(-x))",
+      "range": "(0, 1)",
+      "pros": [
+        "Smooth gradient",
+        "Output between 0 and 1"
+      ],
+      "cons": [
+        "Vanishing gradient",
+        "Not zero-centered"
+      ],
+      "use_case": "Binary classification output layer"
+    },
+    {
+      "name": "Tanh",
+      "formula": "tanh(x)",
+      "range": "(-1, 1)",
+      "pros": [
+        "Zero-centered",
+        "Stronger gradients than sigmoid"
+      ],
+      "cons": [
+        "Vanishing gradient problem"
+      ],
+      "use_case": "Hidden layers in shallow networks"
+    },
+    {
+      "name": "Linear",
+      "formula": "x",
+      "range": "(-\u221e, \u221e)",
+      "pros": [
+        "Simple",
+        "No transformation"
+      ],
+      "cons": [
+        "Cannot model non-linearity"
+      ],
+      "use_case": "Regression output layer"
+    }
+  ],
+  "loss_functions": [
+    {
+      "name": "Mean Squared Error (MSE)",
+      "formula": "1/n * \u03a3(y_true - y_pred)\u00b2",
+      "type": "regression",
+      "description": "Measures average squared difference between predictions and targets",
+      "sensitive_to_outliers": true
+    },
+    {
+      "name": "Binary Cross-Entropy",
+      "formula": "-[y*log(p) + (1-y)*log(1-p)]",
+      "type": "binary_classification",
+      "description": "Measures divergence between predicted and true probability distributions",
+      "sensitive_to_outliers": false
+    },
+    {
+      "name": "Categorical Cross-Entropy",
+      "formula": "-\u03a3(y_true * log(y_pred))",
+      "type": "multi_class_classification",
+      "description": "Extension of binary cross-entropy for multiple classes",
+      "sensitive_to_outliers": false
+    }
+  ],
+  "optimizers": [
+    {
+      "name": "SGD (Stochastic Gradient Descent)",
+      "learning_rate": "0.01 - 0.1",
+      "pros": [
+        "Simple",
+        "Good for convex problems"
+      ],
+      "cons": [
+        "Slow convergence",
+        "Gets stuck in saddle points"
+      ],
+      "parameters": [
+        "learning_rate",
+        "momentum"
+      ]
+    },
+    {
+      "name": "Adam",
+      "learning_rate": "0.001",
+      "pros": [
+        "Fast convergence",
+        "Adaptive learning rates",
+        "Works well out-of-the-box"
+      ],
+      "cons": [
+        "May converge to suboptimal solutions"
+      ],
+      "parameters": [
+        "learning_rate",
+        "beta1",
+        "beta2",
+        "epsilon"
+      ]
+    },
+    {
+      "name": "RMSprop",
+      "learning_rate": "0.001",
+      "pros": [
+        "Adaptive learning rates",
+        "Good for non-stationary problems"
+      ],
+      "cons": [
+        "Requires learning rate tuning"
+      ],
+      "parameters": [
+        "learning_rate",
+        "decay_rate",
+        "epsilon"
+      ]
+    }
+  ],
+  "regularization": [
+    {
+      "name": "L1 (Lasso)",
+      "formula": "\u03bb * \u03a3|w|",
+      "effect": "Promotes sparsity - forces many weights to zero",
+      "use_case": "Feature selection, model compression"
+    },
+    {
+      "name": "L2 (Ridge)",
+      "formula": "\u03bb * \u03a3w\u00b2",
+      "effect": "Prevents large weights - shrinks weights uniformly",
+      "use_case": "Prevent overfitting while keeping all features"
+    },
+    {
+      "name": "Dropout",
+      "formula": "Randomly drop neurons with probability p",
+      "effect": "Prevents co-adaptation of neurons",
+      "use_case": "Deep networks prone to overfitting"
+    }
+  ],
+  "hyperparameters": [
+    {
+      "name": "Learning Rate",
+      "typical_range": "0.0001 - 0.1",
+      "description": "Controls step size during weight updates",
+      "effect": "Too high: divergence; Too low: slow convergence"
+    },
+    {
+      "name": "Batch Size",
+      "typical_range": "16 - 512",
+      "description": "Number of samples processed before weight update",
+      "effect": "Larger: faster training, less noise; Smaller: more noise, better generalization"
+    },
+    {
+      "name": "Epochs",
+      "typical_range": "10 - 1000",
+      "description": "Number of complete passes through training data",
+      "effect": "More epochs: better learning but risk of overfitting"
+    },
+    {
+      "name": "Hidden Layers",
+      "typical_range": "1 - 5",
+      "description": "Number of layers between input and output",
+      "effect": "More layers: can learn complex patterns but harder to train"
+    },
+    {
+      "name": "Neurons per Layer",
+      "typical_range": "2 - 128",
+      "description": "Number of neurons in each hidden layer",
+      "effect": "More neurons: more capacity but risk of overfitting"
+    }
+  ],
+  "initialization_methods": [
+    {
+      "name": "Xavier/Glorot",
+      "formula": "U[-\u221a(6/(n_in + n_out)), \u221a(6/(n_in + n_out))]",
+      "best_for": "Sigmoid and Tanh activations",
+      "description": "Maintains variance across layers"
+    },
+    {
+      "name": "He",
+      "formula": "N(0, \u221a(2/n_in))",
+      "best_for": "ReLU activation",
+      "description": "Accounts for ReLU's non-linearity"
+    },
+    {
+      "name": "Random Small",
+      "formula": "N(0, 0.01)",
+      "best_for": "General purpose",
+      "description": "Simple random initialization"
+    }
+  ],
+  "input_features": [
+    {
+      "name": "X1",
+      "description": "First coordinate/feature"
+    },
+    {
+      "name": "X2",
+      "description": "Second coordinate/feature"
+    },
+    {
+      "name": "X1\u00b2",
+      "description": "Square of first feature"
+    },
+    {
+      "name": "X2\u00b2",
+      "description": "Square of second feature"
+    },
+    {
+      "name": "X1*X2",
+      "description": "Product of features"
+    },
+    {
+      "name": "sin(X1)",
+      "description": "Sine of first feature"
+    },
+    {
+      "name": "sin(X2)",
+      "description": "Sine of second feature"
+    }
+  ]
+}

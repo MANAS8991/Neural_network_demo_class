@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network Visualization Playground</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Neural Network Playground</h1>
+            <p class="subtitle">Interactive Deep Learning Visualization</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Sidebar: Controls -->
+            <aside class="left-sidebar">
+                <div class="panel">
+                    <h2 class="panel-title">Dataset Selection</h2>
+                    <div class="dataset-grid">
+                        <button class="dataset-btn active" data-dataset="circle">
+                            <span class="dataset-name">Circle</span>
+                            <span class="dataset-difficulty">Medium</span>
+                        </button>
+                        <button class="dataset-btn" data-dataset="xor">
+                            <span class="dataset-name">XOR</span>
+                            <span class="dataset-difficulty">Hard</span>
+                        </button>
+                        <button class="dataset-btn" data-dataset="gaussian">
+                            <span class="dataset-name">Gaussian</span>
+                            <span class="dataset-difficulty">Easy</span>
+                        </button>
+                        <button class="dataset-btn" data-dataset="spiral">
+                            <span class="dataset-name">Spiral</span>
+                            <span class="dataset-difficulty">Hard</span>
+                        </button>
+                        <button class="dataset-btn" data-dataset="plane">
+                            <span class="dataset-name">Plane</span>
+                            <span class="dataset-difficulty">Easy</span>
+                        </button>
+                        <button class="dataset-btn" data-dataset="multigaussian">
+                            <span class="dataset-name">Multi-Gaussian</span>
+                            <span class="dataset-difficulty">Medium</span>
+                        </button>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Noise Level: <span id="noise-value">10</span>%</label>
+                        <input type="range" id="noise-slider" min="0" max="50" value="10" class="slider">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Train/Test Split: <span id="split-value">50</span>%</label>
+                        <input type="range" id="split-slider" min="20" max="80" value="50" class="slider">
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2 class="panel-title">Hyperparameters</h2>
+                    
+                    <div class="control-group">
+                        <label>Learning Rate: <span id="lr-value">0.01</span></label>
+                        <input type="range" id="lr-slider" min="-5" max="0" value="-2" step="0.1" class="slider">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Batch Size</label>
+                        <select id="batch-size" class="select-control">
+                            <option value="1">1</option>
+                            <option value="8">8</option>
+                            <option value="16">16</option>
+                            <option value="32" selected>32</option>
+                            <option value="64">64</option>
+                            <option value="128">128</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Epochs</label>
+                        <input type="number" id="epochs" min="1" max="1000" value="100" class="input-control">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Optimizer</label>
+                        <select id="optimizer" class="select-control">
+                            <option value="sgd">SGD</option>
+                            <option value="adam" selected>Adam</option>
+                            <option value="rmsprop">RMSprop</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Activation Function</label>
+                        <select id="activation" class="select-control">
+                            <option value="relu" selected>ReLU</option>
+                            <option value="sigmoid">Sigmoid</option>
+                            <option value="tanh">Tanh</option>
+                            <option value="linear">Linear</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Regularization</label>
+                        <select id="regularization" class="select-control">
+                            <option value="none" selected>None</option>
+                            <option value="l1">L1</option>
+                            <option value="l2">L2</option>
+                            <option value="dropout">Dropout</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Regularization Rate: <span id="reg-value">0.001</span></label>
+                        <input type="range" id="reg-slider" min="0" max="0.1" value="0.001" step="0.0001" class="slider">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Weight Initialization</label>
+                        <select id="initialization" class="select-control">
+                            <option value="xavier" selected>Xavier</option>
+                            <option value="he">He</option>
+                            <option value="random">Random</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2 class="panel-title">Input Features</h2>
+                    <div class="features-grid">
+                        <label class="feature-checkbox">
+                            <input type="checkbox" checked disabled data-feature="x1">
+                            <span>X1</span>
+                        </label>
+                        <label class="feature-checkbox">
+                            <input type="checkbox" checked disabled data-feature="x2">
+                            <span>X2</span>
+                        </label>
+                        <label class="feature-checkbox">
+                            <input type="checkbox" data-feature="x1sq">
+                            <span>X1²</span>
+                        </label>
+                        <label class="feature-checkbox">
+                            <input type="checkbox" data-feature="x2sq">
+                            <span>X2²</span>
+                        </label>
+                        <label class="feature-checkbox">
+                            <input type="checkbox" data-feature="x1x2">
+                            <span>X1*X2</span>
+                        </label>
+                        <label class="feature-checkbox">
+                            <input type="checkbox" data-feature="sinx1">
+                            <span>sin(X1)</span>
+                        </label>
+                        <label class="feature-checkbox">
+                            <input type="checkbox" data-feature="sinx2">
+                            <span>sin(X2)</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center: Visualization -->
+            <main class="center-content">
+                <!-- Visualization Canvas -->
+                <div class="panel visualization-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Data Visualization &amp; Decision Boundary</h2>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="viz-canvas" width="500" height="400"></canvas>
+                    </div>
+                </div>
+
+                <!-- Network Architecture -->
+                <div class="panel architecture-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Network Architecture</h2>
+                        <div class="layer-controls">
+                            <button id="add-layer" class="btn-icon" title="Add Hidden Layer">+</button>
+                            <button id="remove-layer" class="btn-icon" title="Remove Hidden Layer">−</button>
+                        </div>
+                    </div>
+                    <div id="network-svg-container" class="network-container">
+                        <svg id="network-svg" width="100%" height="300"></svg>
+                    </div>
+                    <div id="layer-neuron-controls" class="layer-controls-container"></div>
+                </div>
+
+                <!-- Training Controls -->
+                <div class="panel controls-panel">
+                    <div class="training-controls">
+                        <button id="play-btn" class="btn btn-primary">
+                            <span class="play-icon">▶</span> Play
+                        </button>
+                        <button id="pause-btn" class="btn btn-secondary" style="display: none;">
+                            <span class="pause-icon">⏸</span> Pause
+                        </button>
+                        <button id="step-btn" class="btn btn-secondary">Step</button>
+                        <button id="reset-btn" class="btn btn-outline">Reset</button>
+                        <div class="speed-control">
+                            <label>Speed: <span id="speed-value">1x</span></label>
+                            <input type="range" id="speed-slider" min="1" max="10" value="1" class="slider">
+                        </div>
+                    </div>
+                    <div class="epoch-display">
+                        <span class="label">Epoch:</span>
+                        <span id="current-epoch" class="value">0</span>
+                        <span class="separator">/</span>
+                        <span id="total-epochs" class="value">100</span>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Sidebar: Metrics -->
+            <aside class="right-sidebar">
+                <div class="panel">
+                    <h2 class="panel-title">Training Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <span class="metric-label">Train Loss</span>
+                            <span id="train-loss" class="metric-value">0.000</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Test Loss</span>
+                            <span id="test-loss" class="metric-value">0.000</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Train Accuracy</span>
+                            <span id="train-accuracy" class="metric-value">0%</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Test Accuracy</span>
+                            <span id="test-accuracy" class="metric-value">0%</span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="loss-chart" height="150"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="accuracy-chart" height="150"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel info-panel">
+                    <h2 class="panel-title">What's Happening?</h2>
+                    <div id="info-content" class="info-content">
+                        <p>Select a dataset and configure your neural network architecture. Click Play to start training!</p>
+                    </div>
+                </div>
+
+                <div class="panel formula-panel">
+                    <h2 class="panel-title">Activation Function</h2>
+                    <div id="formula-content" class="formula-content">
+                        <div class="formula-item">
+                            <strong>ReLU:</strong> max(0, x)
+                        </div>
+                        <div class="formula-item">
+                            <strong>Range:</strong> [0, ∞)
+                        </div>
+                        <div class="formula-item">
+                            <em>Fast and effective for hidden layers</em>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
